@@ -1,10 +1,2 @@
 # discord-webhook-proxy
-A simple proxy for converting incoming data to a discord message
-
-## Implemented converters
-* GitLab -> Discord
-* BitBucket -> Discord
-* Trello -> Discord
-
-## Hosted version
-http://dwhp.kryptondev.de
+Proxy for converting GitLab data from a repository to Discord Embeds in a webhook channel. Only compatible with Push and Pipeline events for now but it works fine.
