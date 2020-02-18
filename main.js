@@ -13,8 +13,6 @@ app.use(express.static(path.resolve(__dirname, 'public')));
 
 // GitLab Converter
 require("./converters/gitlab")(app);
-require("./converters/bitbucket")(app);
-require("./converters/trello")(app);
 
 app.use(function (err, req, res, next) {
   console.log(err.stack);
