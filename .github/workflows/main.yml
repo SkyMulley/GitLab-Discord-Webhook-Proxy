@@ -2,7 +2,7 @@ on: push
 name: Publish New Build
 jobs:
   FTP-Deploy-Action:
-    name: FTP-Deploy-Action
+    name: Deploy-To-FTP
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
@@ -16,7 +16,8 @@ jobs:
         ftp-password: ${{ secrets.FTP_PASSWORD }}
         git-ftp-args: --insecure
   build:
-    name: Build
+    needs: [FTP-Deploy-Action]
+    name: Forever-Restart
     runs-on: ubuntu-latest
     steps:
     - name: executing remote ssh commands using password
