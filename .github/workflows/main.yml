@@ -1,0 +1,30 @@
+on: push
+name: Publish New Build
+jobs:
+  FTP-Deploy-Action:
+    name: Deploy-To-FTP
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+      with:
+        fetch-depth: 2
+    - name: FTP-Deploy-Action
+      uses: SamKirkland/FTP-Deploy-Action@3.0.0
+      with:
+        ftp-server: sftp://${{ secrets.FTP_URL }}:22/${{ secrets.FTP_LOCALDIR }}
+        ftp-username: ${{ secrets.FTP_USER }}
+        ftp-password: ${{ secrets.FTP_PASSWORD }}
+        git-ftp-args: --insecure
+  build:
+    needs: [FTP-Deploy-Action]
+    name: Forever-Restart
+    runs-on: ubuntu-latest
+    steps:
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.FTP_URL }}
+        username: ${{ secrets.RUSERNAME }}
+        password: ${{ secrets.RPASSWORD }}
+        port: 22
+        script: forever restart main.js
