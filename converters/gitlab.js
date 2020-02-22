@@ -38,10 +38,8 @@ module.exports = function(app) {
       request.post("https://discordapp.com/api/webhooks/" + req.params.id + "/" + req.params.token)
       .json(discord)
       .on("response", function(response) {
-        //console.log(response);
       }
       );
-      //console.log(discord);
       res.send("");
     }if(req.body.object_kind==="pipeline") {
       var desc = "";
