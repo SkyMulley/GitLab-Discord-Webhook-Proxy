@@ -87,7 +87,7 @@ module.exports = function(app) {
       var desc = "";
       var rgb = 0;
       if(req.body.object_attributes.state==="opened") {
-        desc = req.body.user.name + " is looking to merge branch `"+req.body.object_attributes.source_branch+"` into `"+req.body.object_attributes.target_branch+"`"
+        desc = req.body.user.name + " is looking to merge branch `"+req.body.object_attributes.source_branch+"` into `"+req.body.object_attributes.target_branch+"`\n**Merge Request Description**\n"+req.body.object_attributes.description
         rgb = 8069775
       }
       if(req.body.object_attributes.state==="merged") {
@@ -103,12 +103,6 @@ module.exports = function(app) {
           "type": "rich",
           "url": req.body.project.web_url,
           "description": desc,
-          "fields": [
-            {
-              "name": "Merge Request Details",
-              "value": req.body.object_attributes.description,
-            },
-          ],
           "author": {
             "name": req.body.object_attributes.title,
             "url" : req.body.project.web_url,
