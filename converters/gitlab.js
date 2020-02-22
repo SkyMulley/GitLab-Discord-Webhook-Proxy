@@ -106,7 +106,7 @@ module.exports = function(app) {
           "fields": [
             {
               "name": "Merge Request Details",
-              "value": req.body.object.attributes.description,
+              "value": req.body.object_attributes.description,
             },
           ],
           "author": {
@@ -117,7 +117,7 @@ module.exports = function(app) {
           "timestamp" : new Date(new Date().getTime()).toISOString(),
           "footer": {
             "icon_url": "https://images-ext-1.discordapp.net/external/rOLw2OEhv18sWefG0BXKB24jkol03LmNTODnUsRxRxs/https/www.gillware.com/wp-content/uploads/2017/02/gitlab-logo-square-300x300.png",
-            "text": req.body.project.name+"/"+req.body.object_attributes.ref,
+            "text": req.body.project.name + " | Merge Request",
           },
         }]
       };
