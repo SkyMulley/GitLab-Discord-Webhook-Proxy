@@ -27,4 +27,4 @@ jobs:
         username: ${{ secrets.RUSERNAME }}
         password: ${{ secrets.RPASSWORD }}
         port: 22
-        script: forever restart main.js
+        script: forever restart ${{ secrets.FTP_LOCALDIR }}/main.js
