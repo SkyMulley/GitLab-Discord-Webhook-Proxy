@@ -87,15 +87,15 @@ module.exports = function(app) {
       var desc = "";
       var rgb = 0;
       if(req.body.object_attributes.state==="opened") {
-        desc = req.body.user.name + " is looking to merge branch `"+req.body.object_attributes.source_branch+"` into `"+req.body.object_attributes.target_branch
+        desc = req.body.user.name + " is looking to merge branch `"+req.body.object_attributes.source_branch+"` into `"+req.body.object_attributes.target_branch+"`"
         rgb = 8069775
       }
       if(req.body.object_attributes.state==="merged") {
-        desc = req.body.user.name + " has merged branch `"+req.body.object_attributes.source_branch+"` into `"+req.body.object_attributes.target_branch
+        desc = req.body.user.name + " has merged branch `"+req.body.object_attributes.source_branch+"` into `"+req.body.object_attributes.target_branch+"`"
         rgb = 8311585
       }
       if(req.body.object_attributes.state==="closed") {
-        desc = req.body.user.name + " has closed the merge request for branch `"+req.body.object_attributes.source_branch+"` into `"+req.body.object_attributes.target_branch
+        desc = req.body.user.name + " has closed the merge request for branch `"+req.body.object_attributes.source_branch+"` into `"+req.body.object_attributes.target_branch+"`"
         rgb = 16711682
       }
       var discord = {
