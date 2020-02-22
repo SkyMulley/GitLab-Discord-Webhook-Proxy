@@ -45,11 +45,11 @@ module.exports = function(app) {
       var desc = "";
       var rgb = 0;
       if(req.body.object_attributes.status==="success") {
-        desc = "Pipeline event has successfully completed\nTook "+req.body.object_attributes.duration+" seconds."
+        desc = "Pipeline event was **successful**\nTook `"+req.body.object_attributes.duration+"` seconds."
         rgb = 40000
       }
       if(req.body.object_attributes.status==="failed"){
-        desc = "Pipeline event has failed. Check the logs!"
+        desc = "Pipeline event has **failed**. Check the logs!"
         rgb = 10430000
       }
       var discord = {
@@ -83,6 +83,10 @@ module.exports = function(app) {
       //console.log(discord);
       res.send("");
     }
+    }if(req.body.object_kind==="merge_request") {
+      var desc = "";
+      var rgb = 0;
+
     }
   });
 }
