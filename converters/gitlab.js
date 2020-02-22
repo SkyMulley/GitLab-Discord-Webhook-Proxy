@@ -47,11 +47,11 @@ module.exports = function(app) {
       var desc = "";
       var rgb = 0;
       if(req.body.object_attributes.status==="success") {
-        desc = "Update has been pushed to the server successfully\nPush took "+req.body.object_attributes.duration+" seconds."
+        desc = "Pipeline event has successfully completed\nTook "+req.body.object_attributes.duration+" seconds."
         rgb = 40000
       }
       if(req.body.object_attributes.status==="failed"){
-        desc = "Update has failed! Poke Sky to get him to check the pipeline logs"
+        desc = "Pipeline event has failed. Check the logs!"
         rgb = 10430000
       }
       var discord = {
