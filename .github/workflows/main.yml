@@ -1,0 +1,28 @@
+on: push
+name: Publish New Build
+jobs:
+  FTP-Deploy-Action:
+    name: FTP-Deploy-Action
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+      with:
+        fetch-depth: 2
+    - name: FTP-Deploy-Action
+      uses: SamKirkland/FTP-Deploy-Action@3.0.0
+      with:
+        ftp-server: sftp://${{ secrets.FTP_URL }}:22
+        ftp-username: ${{ secrets.FTP_USER }}
+        ftp-password: ${{ secrets.FTP_PASSWORD }}
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.FTP_URL }}
+        username: ${{ secrets.RUSERNAME }}
+        password: ${{ secrets.RPASSWORD }}
+        port: 21
+        script: forever restart main.js
