@@ -18,7 +18,7 @@ app.use(function (err, req, res, next) {
   console.log(err.stack);
 });
 
-var port = process.env.PORT || 80;
+var port = 8100;
 app.listen(port, function() {
   console.log("Server started at port " + port);
 });
