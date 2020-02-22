@@ -11,10 +11,9 @@ jobs:
     - name: FTP-Deploy-Action
       uses: SamKirkland/FTP-Deploy-Action@3.0.0
       with:
-        ftp-server: sftp://${{ secrets.FTP_URL }}:22
+        ftp-server: sftp://${{ secrets.FTP_URL }}:22/${{ secrets.FTP_LOCALDIR }}
         ftp-username: ${{ secrets.FTP_USER }}
         ftp-password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: ${{ secrets.FTP_DIR }}
         git-ftp-args: --insecure
   build:
     name: Build
@@ -26,5 +25,5 @@ jobs:
         host: ${{ secrets.FTP_URL }}
         username: ${{ secrets.RUSERNAME }}
         password: ${{ secrets.RPASSWORD }}
-        port: 21
+        port: 22
         script: forever restart main.js
