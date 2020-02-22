@@ -24,6 +24,7 @@ module.exports = function(app) {
           "description": description,
           "author": {
             "name": req.body.user_name,
+            "url" : req.body.project.web_url,
             "icon_url": req.body.user_avatar,
           },
           "color": 226760,
@@ -60,6 +61,7 @@ module.exports = function(app) {
           "description": desc,
           "author": {
             "name": req.body.user.name,
+            "url" : req.body.project.web_url,
             "icon_url": req.body.user.avatar_url,
           },
           "color": rgb,
