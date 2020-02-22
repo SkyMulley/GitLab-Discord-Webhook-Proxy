@@ -86,7 +86,53 @@ module.exports = function(app) {
     }if(req.body.object_kind==="merge_request") {
       var desc = "";
       var rgb = 0;
+      if(req.body.object_attributes.state==="opened") {
+        desc = req.body.user.name + " is looking to merge branch `"+req.body.object_attributes.source_branch+"` into `"+req.body.object_attributes.target_branch
+        rgb = 8069775
+      }
+      if(req.body.object_attributes.state==="merged") {
+        desc = req.body.user.name + " has merged branch `"+req.body.object_attributes.source_branch+"` into `"+req.body.object_attributes.target_branch
+        rgb = 8311585
+      }
+      if(req.body.object_attributes.state==="closed") {
+        desc = req.body.user.name + " has closed the merge request for branch `"+req.body.object_attributes.source_branch+"` into `"+req.body.object_attributes.target_branch
+        rgb = 16711682
+      }
+      var discord = {
+        "embeds": [{
+          "type": "rich",
+          "url": req.body.project.web_url,
+          "description": desc,
+          "fields": [
+            {
+              "name": "Merge Request Details",
+              "value": req.body.object.attributes.description,
+            },
+          ],
+          "author": {
+            "name": req.body.object_attributes.title,
+            "url" : req.body.project.web_url,
+          },
+          "color": rgb,
+          "timestamp" : new Date(new Date().getTime()).toISOString(),
+          "footer": {
+            "icon_url": "https://images-ext-1.discordapp.net/external/rOLw2OEhv18sWefG0BXKB24jkol03LmNTODnUsRxRxs/https/www.gillware.com/wp-content/uploads/2017/02/gitlab-logo-square-300x300.png",
+            "text": req.body.project.name+"/"+req.body.object_attributes.ref,
+          },
+        }]
+      };
+      if(desc!="") {
 
+        request.post("https://discordapp.com/api/webhooks/" + req.params.id + "/" + req.params.token)
+        .json(discord)
+        .on("response", function(response) {
+          //console.log(response);
+        }
+        );
+  
+        //console.log(discord);
+        res.send("");
+      }
     }
   });
 }
