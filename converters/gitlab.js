@@ -10,10 +10,19 @@ module.exports = function(app) {
       var description = "";
 
       if(req.body.total_commits_count===1) {
-        description = req.body.commits[0].message
+        commit = req.body.commits[0].message
+        if(commit.charAt(0)==="~") {
+          description = "This commit has been marked as private"
+        }else {
+          description = commit
+        }
       }else{
         req.body.commits.forEach(function(commit) {
-          description += utils.short("- "+commit.message.split("\n")[0], 150) + "\n";
+          if(commit.message.charAt(0)==="~") {
+            description += utils.short("- This commit has been marked as private\n")
+          }else{
+            description += utils.short("- "+commit.message.split("\n")[0], 150) + "\n";
+          }
         });
       }
 
