@@ -13,9 +13,11 @@ module.exports = function(app) {
         description = req.body.commits[0].message
       }else{
         req.body.commits.forEach(function(commit) {
-          description += utils.short("- "+commit.message.split("\n")[0], 150) + "\n";
+          description += "- "+commit.message.split("\n")[0] + "\n";
         });
       }
+
+      description = utils.short(description);
 
       var discord = {
         "embeds": [{
