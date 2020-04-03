@@ -98,7 +98,11 @@ module.exports = function(app) {
       var desc = "";
       var rgb = 0;
       if(req.body.object_attributes.state==="opened") {
-        desc = req.body.user.name + " is looking to merge branch `"+req.body.object_attributes.source_branch+"` into `"+req.body.object_attributes.target_branch+"`\n**Merge Request Description**\n"+req.body.object_attributes.description
+        if(req.body.object_attributes.description==="") {
+          desc = req.body.user.name + " is looking to merge branch `"+req.body.object_attributes.source_branch+"` into `"+req.body.object_attributes.target_branch+"`"
+        }else{
+          desc = req.body.user.name + " is looking to merge branch `"+req.body.object_attributes.source_branch+"` into `"+req.body.object_attributes.target_branch+"`\n**Merge Request Description**\n"+req.body.object_attributes.description
+        }
         rgb = 8069775
       }
       if(req.body.object_attributes.state==="merged") {
