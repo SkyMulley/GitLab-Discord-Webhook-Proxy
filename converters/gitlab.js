@@ -18,10 +18,12 @@ module.exports = function(app) {
         }
       }else{
         req.body.commits.forEach(function(commit) {
-          if(commit.message.charAt(0)==="~") {
-            description += "- This commit has been marked as private\n"
-          }else{
-            description += "- "+commit.message.split("\n")[0] + "\n";
+          if(!commit.message.includes("Merge") && !commit.message.includes("branch")) {
+            if(commit.message.charAt(0)==="~") {
+              description += "- This commit has been marked as private\n"
+            }else{
+              description += "- "+commit.message.split("\n")[0] + "\n";
+            }
           }
         });
       }
