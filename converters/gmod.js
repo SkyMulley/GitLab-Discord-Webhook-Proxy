@@ -2,8 +2,7 @@ const utils = require("../utils");
 const request = require("request");
 
 module.exports = function(app) {
-  app.post("/hooks/:id/:token/gmod", function(req, res) {
-    if(!req.body) return res.sendStatus(500);
+  app.post("/hooks/:id/:token/gmod", async (req, res) => {
     var data = req.body;
 
       var discord = {
