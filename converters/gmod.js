@@ -10,13 +10,13 @@ module.exports = function(app) {
           "type": "rich",
           "description": data.msg,
           "author": {
-            "name": data.play,
+            "name": data.ply,
           },
           "color": 226760,
           "timestamp" : new Date(new Date().getTime()).toISOString(),
           "footer": {
             "icon_url": "https://upload.wikimedia.org/wikipedia/commons/3/34/Gmod_logo.png",
-            "text": data.titl,
+            "text": data.title,
           },
         }]
       }
