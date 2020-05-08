@@ -4,21 +4,20 @@ const request = require("request");
 module.exports = function(app) {
   app.post("/hooks/:id/:token/gmod", function(req, res) {
     if(!req.body) return res.sendStatus(500);
-
-      var description = utils.short(req.body.message);
+    var data = req.body;
 
       var discord = {
         "embeds": [{
           "type": "rich",
-          "description": description,
+          "description": data.msg,
           "author": {
-            "name": req.body.player,
+            "name": data.play,
           },
           "color": 226760,
           "timestamp" : new Date(new Date().getTime()).toISOString(),
           "footer": {
             "icon_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Gmodlogo.svg/1200px-Gmodlogo.svg.png",
-            "text": req.body.title
+            "text": data.titl,
           },
         }]
       }
