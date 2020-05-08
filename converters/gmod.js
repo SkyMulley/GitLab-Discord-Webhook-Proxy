@@ -15,7 +15,7 @@ module.exports = function(app) {
           "color": 226760,
           "timestamp" : new Date(new Date().getTime()).toISOString(),
           "footer": {
-            "icon_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Gmodlogo.svg/1200px-Gmodlogo.svg.png",
+            "icon_url": "https://upload.wikimedia.org/wikipedia/commons/3/34/Gmod_logo.png",
             "text": data.titl,
           },
         }]
