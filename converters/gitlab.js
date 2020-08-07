@@ -160,7 +160,6 @@ module.exports = function(app) {
           }]
         };
       }
-      if(desc!="") {
 
         request.post("https://discordapp.com/api/webhooks/" + req.params.id + "/" + req.params.token)
         .json(discord)
@@ -171,7 +170,6 @@ module.exports = function(app) {
   
         //console.log(discord);
         res.send("");
-      }
     }if(req.body.object_kind==="note"){
       var title = ""
       if(req.body.object_attributes.noteable_type=="Commit") {
@@ -280,7 +278,6 @@ module.exports = function(app) {
           }]
         };
       }
-      if(desc!="") {
 
         request.post("https://discordapp.com/api/webhooks/" + req.params.id + "/" + req.params.token)
         .json(discord)
@@ -291,7 +288,6 @@ module.exports = function(app) {
   
         //console.log(discord);
         res.send("");
-      }
     }
   });
 }
