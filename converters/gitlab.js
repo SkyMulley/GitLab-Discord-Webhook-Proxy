@@ -5,10 +5,9 @@ module.exports = function(app) {
   app.post("/hooks/:id/:token/gitlab", function(req, res) {
     if(!req.body) return res.sendStatus(500);
 
-    if(req.body.object_kind === "push") {
+    if(req.body.object_kind === "push" && req.body.commits[0].message.charAt(0)!=="#") {
 
       var description = "";
-      if(req.body.commits[0].message.charAt(0)==="#"){return;}
       if(req.body.total_commits_count===1) {
         commit = req.body.commits[0].message
         if(commit.charAt(0)==="~") {
