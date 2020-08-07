@@ -221,6 +221,80 @@ module.exports = function(app) {
         //console.log(discord);
         res.send("");
       }
+    }if(req.body.object_kind==="issue") {
+      if(req.body.object_attributes.created_at===req.body.object_attributes.updated_at) {return;}
+      var desc = "";
+      var content = "";
+      var rgb = 0;
+      if(req.body.object_attributes.state==="opened") {
+        desc = req.body.user.name + " has opened an issue `"+req.body.object_attributes.title+"`"
+        if(req.body.object_attributes.description!=="") {
+          content=req.body.object_attributes.description
+        }
+        rgb = 8069775
+      }
+      if(req.body.object_attributes.state==="closed") {
+        desc = req.body.user.name + " has closed an issue `"+req.body.object_attributes.title+"`"
+        rgb = 16711682
+      }
+      var discord;
+      if (content !== "") {
+        var discord = {
+          "embeds": [{
+            "type": "rich",
+            "url": req.body.project.web_url,
+            "fields": [
+              {
+                "name": desc,
+                "value": content,
+                "inline": false
+              },
+            ],
+            "author": {
+              "name": req.body.user.name,
+              "url" : req.body.project.web_url+"/issues/"+req.body.object_attributes.id,
+              "icon_url": req.body.user.avatar_url,
+            },
+            "color": rgb,
+            "timestamp" : new Date(new Date().getTime()).toISOString(),
+            "footer": {
+              "icon_url": "https://images-ext-1.discordapp.net/external/rOLw2OEhv18sWefG0BXKB24jkol03LmNTODnUsRxRxs/https/www.gillware.com/wp-content/uploads/2017/02/gitlab-logo-square-300x300.png",
+              "text": req.body.project.name + " | Issue",
+            },
+          }]
+        };
+      }else{
+        var discord = {
+          "embeds": [{
+            "type": "rich",
+            "url": req.body.project.web_url,
+            "description": desc,
+            "author": {
+              "name": req.body.user.name,
+              "url" : req.body.project.web_url+"/Issue/"+req.body.object_attributes.id,
+              "icon_url": req.body.user.avatar_url,
+            },
+            "color": rgb,
+            "timestamp" : new Date(new Date().getTime()).toISOString(),
+            "footer": {
+              "icon_url": "https://images-ext-1.discordapp.net/external/rOLw2OEhv18sWefG0BXKB24jkol03LmNTODnUsRxRxs/https/www.gillware.com/wp-content/uploads/2017/02/gitlab-logo-square-300x300.png",
+              "text": req.body.project.name + " | Merge Request",
+            },
+          }]
+        };
+      }
+      if(desc!="") {
+
+        request.post("https://discordapp.com/api/webhooks/" + req.params.id + "/" + req.params.token)
+        .json(discord)
+        .on("response", function(response) {
+          //console.log(response);
+        }
+        );
+  
+        //console.log(discord);
+        res.send("");
+      }
     }
   });
 }
