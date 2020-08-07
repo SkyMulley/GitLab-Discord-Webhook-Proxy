@@ -8,7 +8,7 @@ module.exports = function(app) {
     if(req.body.object_kind === "push") {
 
       var description = "";
-
+      if(req.body.commits[0].message.charAt(0)==="#"){return;}
       if(req.body.total_commits_count===1) {
         commit = req.body.commits[0].message
         if(commit.charAt(0)==="~") {
@@ -37,7 +37,7 @@ module.exports = function(app) {
           "description": description,
           "author": {
             "name": req.body.user_name,
-            "url" : req.body.project.web_url,
+            "url" : req.body.project.web_url+"/commit/"+req.body.commits[0].id,
             "icon_url": req.body.user_avatar,
           },
           "color": 226760,
@@ -72,7 +72,7 @@ module.exports = function(app) {
           "description": desc,
           "author": {
             "name": req.body.user.name,
-            "url" : req.body.project.web_url,
+            "url" : req.body.project.web_url+"/pipelines/"+req.body.object_attributes.id,
             "icon_url": req.body.user.avatar_url,
           },
           "color": rgb,
@@ -130,7 +130,7 @@ module.exports = function(app) {
             ],
             "author": {
               "name": req.body.user.name,
-              "url" : req.body.project.web_url,
+              "url" : req.body.project.web_url+"/merge_requests/"+req.body.object_attributes.id,
               "icon_url": req.body.user.avatar_url,
             },
             "color": rgb,
@@ -149,7 +149,7 @@ module.exports = function(app) {
             "description": desc,
             "author": {
               "name": req.body.user.name,
-              "url" : req.body.project.web_url,
+              "url" : req.body.project.web_url+"/merge_requests/"+req.body.object_attributes.id,
               "icon_url": req.body.user.avatar_url,
             },
             "color": rgb,
@@ -176,13 +176,13 @@ module.exports = function(app) {
     }if(req.body.object_kind==="note"){
       var title = ""
       if(req.body.object_attributes.noteable_type=="Commit") {
-        title = "Commented on Commit `"+req.body.commit.message+"`"
+        title = req.body.user.name+" commented on Commit `"+req.body.commit.message+"`"
       }
       if(req.body.object_attributes.noteable_type=="MergeRequest") {
-        title = "Commented on Merge Request `"+req.body.merge_request.title+"`"
+        title = req.body.user.name+" commented on Merge Request `"+req.body.merge_request.title+"`"
       }
       if(req.body.object_attributes.noteable_type=="Issue") {
-        title = "Commented on Issue `"+req.body.issue.title+"`"
+        title = req.body.user.name+" commented on Issue `"+req.body.issue.title+"`"
       }
       var discord = {
         "embeds": [{
