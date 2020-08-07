@@ -96,8 +96,7 @@ module.exports = function(app) {
       //console.log(discord);
       res.send("");
     }
-    }if(req.body.object_kind==="merge_request") {
-      if(req.body.object_attributes.created_at===req.body.object_attributes.updated_at) {return;}
+    }if(req.body.object_kind==="merge_request"&&req.body.object_attributes.created_at===req.body.object_attributes.updated_at) {
       var desc = "";
       var content = "";
       var rgb = 0;
@@ -221,8 +220,7 @@ module.exports = function(app) {
         //console.log(discord);
         res.send("");
       }
-    }if(req.body.object_kind==="issue") {
-      if(req.body.object_attributes.created_at===req.body.object_attributes.updated_at) {return;}
+    }if(req.body.object_kind==="issue"&&req.body.object_attributes.created_at===req.body.object_attributes.updated_at) {
       var desc = "";
       var content = "";
       var rgb = 0;
