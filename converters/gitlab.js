@@ -144,6 +144,53 @@ module.exports = function(app) {
         //console.log(discord);
         res.send("");
       }
+    }if(req.body.object_kind==="note"){
+      var title = ""
+      if(req.body.object_attributes.noteable_type=="Commit") {
+        title = "Commented on Commit `"+req.body.commit.message+"`"
+      }
+      if(req.body.object_attributes.noteable_type=="MergeRequest") {
+        title = "Commented on Merge Request `"+req.body.merge_request.title+"`"
+      }
+      if(req.body.object_attributes.noteable_type=="Issue") {
+        title = "Commented on Issue `"+req.body.issue.title+"`"
+      }
+      var discord = {
+        "embeds": [{
+          "type": "rich",
+          "url": req.body.object_attributes.url,
+          "fields": [
+            {
+              "name": title,
+              "value": req.body.object_attributes.note,
+              "inline": false
+            },
+          ],
+          "author": {
+            "name": req.body.user.name,
+            "url" : req.body.object_attributes.url,
+            "icon_url": req.body.user.avatar_url,
+          },
+          "color": 8311585,
+          "timestamp" : new Date(new Date().getTime()).toISOString(),
+          "footer": {
+            "icon_url": "https://images-ext-1.discordapp.net/external/rOLw2OEhv18sWefG0BXKB24jkol03LmNTODnUsRxRxs/https/www.gillware.com/wp-content/uploads/2017/02/gitlab-logo-square-300x300.png",
+            "text": req.body.project.name + " | Comment",
+          },
+        }]
+      };
+      if(req.body.object_attributes.note!="") {
+
+        request.post("https://discordapp.com/api/webhooks/" + req.params.id + "/" + req.params.token)
+        .json(discord)
+        .on("response", function(response) {
+          //console.log(response);
+        }
+        );
+  
+        //console.log(discord);
+        res.send("");
+      }
     }
   });
 }
