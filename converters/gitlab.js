@@ -98,12 +98,12 @@ module.exports = function(app) {
     }
     }if(req.body.object_kind==="merge_request") {
       var desc = "";
+      var content = "";
       var rgb = 0;
       if(req.body.object_attributes.state==="opened") {
-        if(req.body.object_attributes.description==="") {
-          desc = req.body.user.name + " is looking to merge branch `"+req.body.object_attributes.source_branch+"` into `"+req.body.object_attributes.target_branch+"`"
-        }else{
-          desc = req.body.user.name + " is looking to merge branch `"+req.body.object_attributes.source_branch+"` into `"+req.body.object_attributes.target_branch+"`\n**Merge Request Description**\n"+req.body.object_attributes.description
+        desc = req.body.user.name + " is looking to merge branch `"+req.body.object_attributes.source_branch+"` into `"+req.body.object_attributes.target_branch+"`"
+        if(req.body.object_attributes.description!=="") {
+          content=req.body.object_attributes.description
         }
         rgb = 8069775
       }
@@ -115,23 +115,52 @@ module.exports = function(app) {
         desc = req.body.user.name + " has closed the merge request for branch `"+req.body.object_attributes.source_branch+"` into `"+req.body.object_attributes.target_branch+"`"
         rgb = 16711682
       }
-      var discord = {
-        "embeds": [{
-          "type": "rich",
-          "url": req.body.project.web_url,
-          "description": desc,
-          "author": {
-            "name": req.body.object_attributes.title,
-            "url" : req.body.project.web_url,
-          },
-          "color": rgb,
-          "timestamp" : new Date(new Date().getTime()).toISOString(),
-          "footer": {
-            "icon_url": "https://images-ext-1.discordapp.net/external/rOLw2OEhv18sWefG0BXKB24jkol03LmNTODnUsRxRxs/https/www.gillware.com/wp-content/uploads/2017/02/gitlab-logo-square-300x300.png",
-            "text": req.body.project.name + " | Merge Request",
-          },
-        }]
-      };
+      var discord;
+      if (content !== "") {
+        var discord = {
+          "embeds": [{
+            "type": "rich",
+            "url": req.body.project.web_url,
+            "fields": [
+              {
+                "name": desc,
+                "value": content,
+                "inline": false
+              },
+            ],
+            "author": {
+              "name": req.body.user.name,
+              "url" : req.body.project.web_url,
+              "icon_url": req.body.user.avatar_url,
+            },
+            "color": rgb,
+            "timestamp" : new Date(new Date().getTime()).toISOString(),
+            "footer": {
+              "icon_url": "https://images-ext-1.discordapp.net/external/rOLw2OEhv18sWefG0BXKB24jkol03LmNTODnUsRxRxs/https/www.gillware.com/wp-content/uploads/2017/02/gitlab-logo-square-300x300.png",
+              "text": req.body.project.name + " | Merge Request",
+            },
+          }]
+        };
+      }else{
+        var discord = {
+          "embeds": [{
+            "type": "rich",
+            "url": req.body.project.web_url,
+            "description": desc,
+            "author": {
+              "name": req.body.user.name,
+              "url" : req.body.project.web_url,
+              "icon_url": req.body.user.avatar_url,
+            },
+            "color": rgb,
+            "timestamp" : new Date(new Date().getTime()).toISOString(),
+            "footer": {
+              "icon_url": "https://images-ext-1.discordapp.net/external/rOLw2OEhv18sWefG0BXKB24jkol03LmNTODnUsRxRxs/https/www.gillware.com/wp-content/uploads/2017/02/gitlab-logo-square-300x300.png",
+              "text": req.body.project.name + " | Merge Request",
+            },
+          }]
+        };
+      }
       if(desc!="") {
 
         request.post("https://discordapp.com/api/webhooks/" + req.params.id + "/" + req.params.token)
