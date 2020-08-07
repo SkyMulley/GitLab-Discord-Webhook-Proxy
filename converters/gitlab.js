@@ -131,7 +131,7 @@ module.exports = function(app) {
             ],
             "author": {
               "name": req.body.user.name,
-              "url" : req.body.project.web_url+"/merge_requests/"+req.body.object_attributes.id,
+              "url" : req.body.project.web_url+"/merge_requests/"+req.body.object_attributes.iid,
               "icon_url": req.body.user.avatar_url,
             },
             "color": rgb,
@@ -150,7 +150,7 @@ module.exports = function(app) {
             "description": desc,
             "author": {
               "name": req.body.user.name,
-              "url" : req.body.project.web_url+"/merge_requests/"+req.body.object_attributes.id,
+              "url" : req.body.project.web_url+"/merge_requests/"+req.body.object_attributes.iid,
               "icon_url": req.body.user.avatar_url,
             },
             "color": rgb,
@@ -252,7 +252,7 @@ module.exports = function(app) {
             ],
             "author": {
               "name": req.body.user.name,
-              "url" : req.body.project.web_url+"/issues/"+req.body.object_attributes.id,
+              "url" : req.body.project.web_url+"/issues/"+req.body.object_attributes.iid,
               "icon_url": req.body.user.avatar_url,
             },
             "color": rgb,
