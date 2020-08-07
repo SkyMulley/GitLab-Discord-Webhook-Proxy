@@ -97,6 +97,7 @@ module.exports = function(app) {
       res.send("");
     }
     }if(req.body.object_kind==="merge_request") {
+      if(req.body.object_attributes.created_at===req.body.object_attributes.updated_at) {return;}
       var desc = "";
       var content = "";
       var rgb = 0;
