@@ -217,7 +217,7 @@ module.exports = function(app) {
         //console.log(discord);
         res.send("");
       }
-    }if(req.body.object_kind==="issue" && req.body.object_attributes.created_at==req.body.object_attributes.updated_at) {
+    }if(req.body.object_kind==="issue" && (req.body.object_attributes.action==="open" || req.body.object_attributes.action==="close")) {
       var desc = "";
       var content = "";
       var rgb = 0;
