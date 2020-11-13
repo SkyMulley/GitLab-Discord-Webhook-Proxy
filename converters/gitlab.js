@@ -61,15 +61,14 @@ module.exports = function(app) {
           "url": req.body.project.web_url,
           "description": req.body.description,
           "author": {
-            "name": req.body.user_name,
+            "name": req.body.project.name,
             "url" : req.body.url,
-            "icon_url": req.body.user_avatar,
           },
           "color": 226760,
           "timestamp" : new Date(new Date().getTime()).toISOString(),
           "footer": {
             "icon_url": "https://images-ext-1.discordapp.net/external/rOLw2OEhv18sWefG0BXKB24jkol03LmNTODnUsRxRxs/https/www.gillware.com/wp-content/uploads/2017/02/gitlab-logo-square-300x300.png",
-            "text": req.body.project.name+" | Release"
+            "text": "Release"
           },
         }]
       }
